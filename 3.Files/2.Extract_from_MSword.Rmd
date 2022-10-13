@@ -1,0 +1,158 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+
+if (!require("dplyr")) {
+  install.packages("dplyr", repos="http://cran.rstudio.com/") 
+  library(dplyr)
+}
+
+if (!require("readxl")) {
+  install.packages("readxl", repos="http://cran.rstudio.com/") 
+  library(readxl)
+}
+
+if (!require("stringr")) {
+  install.packages("stringr", repos="http://cran.rstudio.com/") 
+  library(stringr)
+}
+
+if (!require("htmlwidgets")) {
+  install.packages("htmlwidgets", repos="http://cran.rstudio.com/") 
+  library(htmlwidgets)
+}
+
+if (!require("officer")) {
+  install.packages("officer", repos="http://cran.rstudio.com/") 
+  library(officer)
+}
+
+```
+
+Just text from .docx
+====================
+1.Load a great deal of documents
+The function docx_summary() returns the content of a Word document.
+```{r}
+
+dir <-"C:/R-Source/docs"
+filenames <- list.files(path = dir, pattern = "*.docx", full.names = TRUE)
+docxtest <- lapply(filenames, function(x) officer::docx_summary(officer::read_docx(x)) )
+#turn "docxtest" (the content exttracted) into a data-frame
+docxtest<-as.data.frame(docxtest)
+
+View(docxtest)
+```
+
+2.Resume
+```{r}
+#Return the First or Last Part of an Object
+head(docxtest)
+#Summary of objetc
+tapply(docxtest$doc_index, 
+       docxtest$content_type, 
+       function(x)length(unique(x)))
+```
+
+
+3.Getting all paragraphs:
+```{r}
+
+par_data <- subset(docxtest,content_type %in% "paragraph") 
+par_data <- par_data[, c("doc_index", "style_name", 
+                         "text", "level", "num_id") ]
+par_data$text <- with(par_data, {
+  substr(
+    text, start = 1, 
+    stop = ifelse(nchar(text)<30, nchar(text), 30) )
+})
+par_data
+```
+
+3.Word tables
+```{r}
+table_cells <- subset(docxtest, content_type %in% "table cell")
+print(head( table_cells) )
+```
+
+
+4.Cells positions and values are dispatched in columns row_id, cell_id, text and is_header
+(a logical column indicating if the cell is part of a header or not). Note that the content itself (column text) is a character vector.
+
+```{r}
+table_body <- subset(table_cells, !is_header)
+table_body <- table_body[,c("row_id", "cell_id", "text")]
+head(table_body)
+```
+
+5.Reshaping the data close to the orginal table
+with columns row_id, cell_id and text would display something close to the orginal table:
+```{r}
+tapply(table_body$text, 
+       list(row_id = table_body$row_id, 
+            cell_id = table_body$cell_id
+            ), 
+       FUN = I
+       )
+```
+
+6.Getting headers requires another operation:
+```{r}
+data <- subset(table_cells, is_header) 
+data <- data[, c("row_id", "cell_id", "text") ] 
+
+tapply(data$text, 
+   list(row_id = data$row_id, 
+        cell_id = data$cell_id
+        ), FUN = I )
+```
+
+
+View the field which contain:
+```{r}
+View(docxtest$text[docxtest$row_id==27])
+```
+
+Is "X" before or after some expression like "Evento de Uso 1"  
+"Evento de Uso 1 (Situación no esperada para escalar a REAPRO)X"
+```{r}
+pattern="Evento de Uso 1 (Situación no esperada para escalar a REAPRO)X"
+text_source= docxtest$text[docxtest$row_id==27]
+
+str_detect(text_source,pattern)
+
+
+str_view(text_source,"X")
+
+grep(pattern,text_source)
+```
+
+```{r}
+# Creae a vector variable and assign four string values ot the variable
+strings <- c("abcd", "cdab", "cabd", "c abd")
+
+# Find string values containing 'ab', return indices
+grep("ab", strings)
+```
+
+
+
+s
+```{r}
+install.packages("sos")
+library("sos")
+findFn("word frequency")
+```
+
+
+
+
+
+
+
+
+
+

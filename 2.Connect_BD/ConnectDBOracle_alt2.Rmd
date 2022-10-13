@@ -1,0 +1,18 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+install.packages('RJDBC')
+
+library(RJDBC)
+```
+
+
+```{r}
+jdbcDriver =JDBC("oracle.jdbc.OracleDriver",classPath="/directory/ojdbc6.jar")
+
+jdbcConnection =dbConnect(jdbcDriver, "jdbc:oracle:thin:@//database.hostname.com:port/service_name_or_sid", "username", "password")
+
+```
+

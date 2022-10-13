@@ -1,0 +1,102 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+
+if (!require("tidyr")) {
+  install.packages("tidyr", repos="http://cran.rstudio.com/") 
+  library(tidyr)
+}
+
+if (!require("rvest")) {
+  install.packages("rvest", repos="http://cran.rstudio.com/") 
+  library(rvest)
+}
+
+if (!require("methods")) {
+  install.packages("methods", repos="http://cran.rstudio.com/") 
+  library(methods)
+}
+
+if (!require("dplyr")) {
+  install.packages("dplyr", repos="http://cran.rstudio.com/") 
+  library(dplyr)
+}
+```
+
+
+```{r}
+if (!require("tm")) {
+  install.packages("tm", repos="http://cran.rstudio.com/") 
+  library(tm)
+}
+```
+
+
+#Load from webpages
+book1=Modern Data Science with R, Benjamin S. Baumer
+book 2= Data Wrangling with R,
+```{r}
+url <- "http://en.wikipedia.org/wiki/List_of_songs_recorded_by_the_Beatles"
+tables <- url %>%
+read_html() %>%
+html_nodes(css = "table")
+#as we can see in the webpage mentioned before, the 7th tablehas the sonngs treats
+songs <- html_table(tables[[7]])
+
+glimpse(songs)
+```
+
+#Clean
+```{r}
+songs_clean <- songs %>%
+mutate(Song = gsub('\\"', "", Song), Year = as.numeric(Year)) %>%
+rename(songwriters = 'Songwriter(s)[a]')
+
+```
+
+
+```{r}
+songs_clean%>%
+  count(songwriters)
+```
+
+#Select just a singer
+```{r}
+length(grep("McCartney", songs_clean$songwriters))
+```
+
+#Select two singer and their work
+```{r}
+#either McCartney or Lennon (or both)
+length(grep("(McCartney|Lennon)", songs_clean$songwriters))
+
+#how many songs they collaborated on
+length(grep("(McCartney|Lennon).*(McCartney|Lennon)", songs_clean$songwriters))
+
+#list of songsupon which Lennon and McCartney collaborated
+songs_clean %>%
+filter(grepl("(McCartney|Lennon).*(McCartney|Lennon)", songwriters)) %>%
+select(Song) %>%
+head()
+
+```
+
+# FInding most frequent  words
+Volatile Corpus(VCorpus)) from "tm" package
+```{r}
+# create a corpus from the vector of song titles, remove the English stop words, and build a document term matrix using the tf:idf criteria. Once this is done, we and the words with the highest tf:idf scores
+song_titles <- VCorpus(VectorSource(songs_clean$Song)) %>%
+tm_map(removeWords, stopwords("english")) %>%
+DocumentTermMatrix(control = list(weighting = weightTfIdf))
+
+#now find those qith a freq >25
+findFreqTerms(song_titles, 25)
+
+```
+
+
+
+

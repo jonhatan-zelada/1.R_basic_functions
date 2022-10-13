@@ -1,0 +1,48 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+data3=iris
+#Way2: using ifelse(base library) .We cannot use a list of patterns whe we use "grepl"
+data3$Species <- ifelse(grepl("setosa",data3$Species),"specie1","null")
+```
+
+
+# For 
+```{r}
+#create working data
+data1 <- head(iris,10)
+
+for(i in 1:nrow(data1)){
+print(data1[i,1])
+}
+
+
+```
+
+
+
+```{r}
+section <- c("MATH111", "MATH111", "ENG111")
+grade <- c(78, 93, 56)
+student <- c("David", "Kristina", "Mycroft")
+gradebook <- data.frame(section, grade, student)
+
+
+mutate(gradebook, letter = ifelse(grade %in% 60:69, "D",
+                                     ifelse(grade %in% 70:79, "C",
+                                            ifelse(grade %in% 80:89, "B",
+                                                   ifelse(grade %in% 90:99, "A", "F")))))
+
+
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

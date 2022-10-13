@@ -1,0 +1,39 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+#1.Basic Example
+```{r}
+path<-"C:/R-Source"
+dir.create(path2<-file.path(path, "testdir2"), showWarnings = FALSE)
+dir.create(file.path(path2, "testdir3"), showWarnings = FALSE)
+```
+
+#2.Using For
+```{r}
+edt1<-as.data.frame(EDT_for_R)
+
+path<-"C:/R-Source"
+for (i in 1:4) {
+ dir.create(path2<-file.path(path, paste("file",i,sep = "-")), showWarnings = FALSE) 
+}
+```
+
+#3.Create base on a vector
+```{r}
+edt1<-as.data.frame(EDT_for_R)
+
+edt1.filled<-edt1[!is.na(edt1$n1),1]
+
+path<-"C:/R-Source"
+for (i in 1:NROW(edt1.filled)) {
+ dir.create(path2<-file.path(path,edt1.filled[i] ), showWarnings = FALSE) 
+}
+```
+
+#s
+```{r}
+
+```
+

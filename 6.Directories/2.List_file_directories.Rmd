@@ -1,0 +1,36 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+
+https://www.masterdataanalysis.com/r/working-with-files-and-folders-in-r/
+```{r}
+filename<-list.files (path = "C:/R-Source/1.ANS/")
+
+filename<-as.data.frame(filename)
+```
+
+
+#all files in several levels
+```{r}
+list.files (path = "C:/R-Source/", recursive = TRUE)
+
+```
+
+
+#Checking if a file or folder exists
+```{r}
+#Get the working directory:
+getwd()
+#Setup the working directory:
+setwd("C:/R-Source/")
+
+#Check if the file "ddd" exists in the working directory
+file.exists("req_sistema_clean.xlsx")
+```
+
