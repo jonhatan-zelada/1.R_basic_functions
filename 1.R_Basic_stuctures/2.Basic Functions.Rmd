@@ -1,0 +1,94 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+I. SHOW BASIC FEATURES
+=================
+##1.Create a datastructure
+```{r}
+vectNumerico= c(2,8,2,13,2)
+vectString=c("Jose", "Edgar","Jorge","Sara","Jonh")
+
+df2<-data.frame(compras=vectNumerico,nombres=vectString)
+```
+
+
+##2.Class
+```{r}
+class(df2$compras)
+class(df2$nombres)
+```
+
+##3. Unique record
+```{r}
+unique(df2$compras)
+```
+
+
+
+II. COLUMNS and ROW FEATURES
+=================
+
+##1.Name of columns
+```{r}
+ #Colnames 
+  colnames(df2)
+```
+
+##2.Count columns and rows 
+```{r}
+ 
+nRowsDf <- nrow(df2)
+
+
+nColsDf<-ncol(df2)
+
+```
+
+
+
+##3.Asign column's names
+```{r}
+df_col_name=df2
+
+names(df_col_name)[1]<-"Puntos"
+names(df_col_name)[2]<-"Personas"
+
+
+#assign to all 
+names(df_col_name) <- c("Values", "People")
+
+
+View(df_col_name)
+```
+
+
+
+
+##4. Add a column with sequential values
+```{r}
+df.iris<-iris
+df.iris$id <- seq.int(nrow(iris))
+
+```
+
+
+# For 
+```{r}
+#create working data
+data1 <- head(iris,10)
+
+for(i in 1:nrow(data1)){
+print(data1[i,1])
+}
+
+
+```
+
+```{r}
+#For listing in vertical view the values of a "String" or "dataframe", it is necesary use "fill = 1"
+cat(letters,fill = 1)
+
+```
+

@@ -1,0 +1,46 @@
+---
+title: "R Notebook"
+output:
+  html_document: default
+---
+
+Install Libraries
+```{r}
+install.packages("readr")
+install.packages("openxlsx", dependencies = TRUE)
+install.packages("writexl")
+```
+
+Calling Libraries
+```{r Calling Libraries}
+library(readr)
+#for writing
+library(writexl)
+library(openxlsx)
+```
+
+
+I.IMPORTING
+=============
+##1. From a xlsx file
+```{r}
+#We can read from all "sheet" of any excel file
+data1<-read.xlsx("C:/R-Source/Data_processes.xlsx", sheetName = "Hoja1")
+View(data1)
+```
+
+
+
+II.SAVE
+============
+##1.More THAN 66000 ROWS: use cvs
+```{r}
+write.csv(myDf2, "C:/R-Source/back_myDf2.csv") 
+```
+
+##2.lESS THAN 66000 ROWS: use write.xlsx 
+```{r}
+#Libraries: write,xlsx (it comes with "xlsxjars" and "rJava" libraries)
+write_xlsx(myDf2,"C:/R-Source/back_myDf2.xls")
+
+```

@@ -10,10 +10,13 @@ if (!require("tesseract")) {
   library(tesseract)
 }
 
+
 if (!require("pdftools")) {
   install.packages("pdftools", repos="http://cran.rstudio.com/") 
   library(pdftools)
 }
+
+
 
 Sys.getenv("R_ARCH")
 
@@ -53,24 +56,10 @@ text <- ocr("page1.png",engine = tesseract("spa"))
 cat(text)
 ```
 
-only text from png
-===============
-```{r}
-
-```
-
-
 
 
 Extract text from one great number of pages
 =========================================
-```{r}
-
-
-
-```
-
-
 ```{r}
 img_file <- pdftools::pdf_convert("R-intro.pdf", format = 'tiff', pages = 1, dpi = 400)
 # Extract text from png image
@@ -85,17 +74,42 @@ Extract table from pdf (library(tabulizer))
 =========================
 ```{r}
 #set path to file
-file_pdf <- "C:/R-Source/4.pdf/Cotización.pdf"
+file_pdf <- "C:/R-Source/4.pdf/Cotizaci?n.pdf"
 
 area <- locate_areas(file_pdf, pages = 2)
 area
-[[1]]
-      top      left    bottom     right 
-442.20975  30.50972 549.83752 592.01857
+
 mortgagerates <- extract_tables(file, pages = 3, area = area, guess = FALSE)
 
 
-out <- extract_tables(file_pdf), pages = 2)
+out <- extract_tables((file_pdf), pages = 2)
+```
+
+
+```{r}
+
+pdf_subset("~/Documentos/1.R-source/Rolling_Stones_Magazine_TOP500_Songs.pdf",output = "pdfB.pdf", pages = 1:2 )
+
+```
+
+
+
+#pdf_Proveedores
+```{r}
+
+pdf_subset("C:/Users/sgarciag/Documents/R-Source/Capacitacion_Proveedores_JIRA_26-dic-2019.pdf",output = "pdf1.pdf")
+
+pdf_subset("C:/Users/sgarciag/Documents/R-Source/Capacitacion_Proveedores_JIRA_27-dic-2019.pdf",output = "pdf2.pdf")
+
+pdf_subset("C:/Users/sgarciag/Documents/R-Source/Capacitacion_Proveedores_JIRA_19-Feb-2020.pdf",output = "pdf3.pdf")
+
+
+
+pdf_combine(c("pdf1.pdf", "pdf2.pdf","pdf3.pdf"), output = "C:/Users/sgarciag/Documents/R-Source/Capacitacion_Proveedores_JIRA.pdf")
+
+
+
+
 ```
 
 

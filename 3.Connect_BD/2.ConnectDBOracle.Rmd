@@ -1,0 +1,49 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+install.packages('RJDBC')
+
+library(RJDBC)
+```
+
+
+```{r}
+#Oracle Database 12.2.0.1
+
+jdbcDriver =JDBC("oracle.jdbc.OracleDriver",classPath="C:/R-Source/ojdbc8.jar")
+
+con =dbConnect(jdbcDriver, "jdbc:oracle:thin:@ip:port/bd_name", "user", "password")
+
+alltable<-dbListTables(con)
+alltable<-as.data.frame(alltable)
+
+
+dbGetQuery(con, "select * from SPACES")
+
+```
+
+
+```{r}
+dbWriteTable(con,)
+dbGetQuery(con,"select count(*) from SPACE_TABLE")
+d <- dbReadTable(con, "TEST_TABLE")
+dbDisconnect(con)
+```
+
+##ALT 2
+
+```{r}
+install.packages('RJDBC')
+
+library(RJDBC)
+```
+
+
+```{r}
+jdbcDriver =JDBC("oracle.jdbc.OracleDriver",classPath="/directory/ojdbc6.jar")
+
+jdbcConnection =dbConnect(jdbcDriver, "jdbc:oracle:thin:@//database.hostname.com:port/service_name_or_sid", "username", "password")
+
+```

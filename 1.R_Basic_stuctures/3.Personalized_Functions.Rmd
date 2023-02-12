@@ -1,0 +1,67 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+BASIS
+============================
+```{r}
+f <- function(x, y, z=1){
+result <- x + (2*y) + (3*z)
+return(result)
+}
+
+f(2,3,4)
+f(2,3)
+f(z=4, y=2, 3)
+```
+
+args() function to view the parameter names and default values:
+```{r}
+args(f)
+```
+
+
+RECURSIVE
+=====================
+#Factorial
+```{r}
+    recur_factorial <- function(n) {
+    if(n <= 1) {
+    return(1)
+    } else {
+    return(n * recur_factorial(n-1))
+    }
+    }
+
+recur_factorial(5)
+```
+
+#Harmonic serie
+```{r}
+    harmonic <- function(n) {
+    if(n <= 1) {
+    return(1)
+    } else {
+    return(1/n + harmonic(n-1))
+    }
+    }
+
+
+harmonic(3)*60000*0.25
+```
+
+#Sum
+```{r}
+    Sum.Series <- function(number)
+    {
+    if(number == 0) {
+    return (0)
+    } else {
+    return ((number * number ) + Sum.Series(number - 1))
+    }
+    }
+    Sum.Series(3)
+```
+
+

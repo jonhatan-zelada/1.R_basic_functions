@@ -1,0 +1,266 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+I.CREATE A VECTOR
+======================
+##1. Create a vector from data composition
+```{r}
+#Vector
+vectNumerico<-c(3,1,5,6,3,9)
+
+vectNumerico1<-c(2:8)
+
+vectString<-c("jose","jesus","walter","Jonh","Julio","Pieree")
+vectString
+```
+
+##2. Create a vector from secuence and repetitions
+```{r}
+## a) ( 1,2,3, ??? ,19,20) 
+v1<-c(1:20)
+
+## b) ( 20,19, ??? ,2,1 )
+v2<-c(20:1)
+
+## c) ( 1,2,3, ??? ,19,20,19,18, ??? ,2,1 )
+v3<-c(1:20,19:1)
+
+## d) (4,6,3) y asignarlo a la variable tmp
+tpm<-c(4,6,3)
+
+## e) ( 4,6,3,4,6,3, ??? ,4,6,3 ) donde el numero 4 aparece 10 veces.
+v4<-rep.int(tpm,times=10)
+
+#f) ( 4,6,3,4,6,3, ??? ,4,6,3,4 ) donde hay 11 ocurrencias del n?mero 4, 10 ocurrencias del n?mero 6 y 10 ocurrencias del n?mero 3
+v5<-c(v4,4)
+##g) ( 4,4, ??? ,4,6,6, ??? ,6,3,3, ??? ,3 ) donde hay 10 ocurrencias del numero 4, 20 ocurrencias del numero 6 y 30 ocurrencias del numero 3
+v6<-rep(4,times=10)
+v7<-rep(6,times=20)
+v8<-rep(3,times=30)
+v9<-c(v6,v7,v8)
+
+vectSecuence<-seq(2, 4, by=0.5)
+
+vectRepetition<-rep(1:2, times=3)
+```
+
+##3.Create vectors of date
+```{r}
+#1.Create a dataframe of dates 
+df.dates<-seq(as.Date("1910/1/1"), as.Date("1999/1/1"), "years")
+```
+
+
+
+
+#3.Raw Data with "Date"
+```{r}
+data1 <- data.frame(a = abs(rnorm(20) * 10),
+                  b = abs(rnorm(20) * 10),
+                  date = seq(as.Date("2014-01-01"), by = "month", length.out = 20))
+```
+
+##3.1Date and seed
+```{r}
+set.seed(20)
+deliver_Date<-Sys.Date()+sort(sample(1:5,3))
+deliver_Date
+```
+
+```{r}
+Start <- as.Date("2013-01-01")
+End <- as.Date("2013-01-31")
+dates <- seq(from = Start, to = End, by = 1)
+
+set.seed(2)
+draw1 <- sample(dates, 30)
+draw2 <- sample(dates, 5)
+
+draw1
+```
+
+
+
+
+II.CREATE A DATAFRAME
+======================
+##1.From vectors
+```{r}
+#one colum
+df1<-data.frame(y = 1:5)
+
+#Two columns Data frame without column name, base in previous vectors
+df2<-data.frame(vectNumerico,vectString)
+
+#Data frame with column name
+df3<-data.frame(products=vectNumerico,peopleName=vectString)
+
+```
+
+##2.From scratch  
+```{r}
+#1.From vectors 
+ col1 = c(2, 3, 5) 
+ col2 = c("aa", "bb", "cc") 
+ col3 = c(TRUE, FALSE, TRUE) 
+ df4 = data.frame(col1, col2, col3)
+ 
+ #2.Data frame with 3cols x 5rows
+  df5 <- data.frame(Nombre=c("Melody","Gian","Johana","Jearson","Jenny"),scores=c(3,1,5,6,3),Menbership=c(11,2,6,7,8))
+  
+
+```
+
+
+
+##3.Using letters
+```{r}
+col1 = c(letters[1:4],"m") #put the first 4 random letter and "m" as the last one
+col2 = 1:5
+col3 = letters[10:14]
+
+data2 <- data.frame(col1,col2,col3)
+```
+
+
+##4 Using "seed"
+
+```{r}
+set.seed(1234)
+"create a vector"
+diag      = c("Depression", "Bipolar")
+#create the datafrae
+ID        = 1:10
+Age       = round(rnorm(10, 50, 1))
+Diagnosis = sample(diag, 10, replace=TRUE)
+
+data = data.frame(ID, Age, Diagnosis)
+```
+s
+```{r}
+set.seed(99)
+x1 <- rbinom(20, 1, 0.5)
+
+set.seed(100)
+x2 <- round(10 + rnorm(20, 5, 5), 2)
+
+set.seed(101)
+y <- round((1 + (x2 * 2 / 5) + x1 - rnorm(20, 0, 3)), 2)
+
+
+rcart_df <- data.frame(x1, x2, y)
+rcart_df
+```
+
+##5.Using "sample"
+```{r}
+myservice <- c("service1","service2","service3","service4")
+mylevels <- c('Strongly Disagree', 'Disagree', 'Neither', 'Agree', 'Strongly Agree')
+
+# Create a dummy data frame. Note that "Item 1" has only four levels
+items <- data.frame('service'=factor(sample(myservice[1:4], 100, replace=TRUE)),
+					'satisfaction'=factor(sample(mylevels[1:5], 100, replace=TRUE)),
+					'Item 3'=factor(sample(mylevels[1:5], 100, replace=TRUE)),
+					check.names=FALSE)
+str(items)
+```
+
+
+
+##6.Create binary data 
+
+```{r}
+#expand.grid:Create a data frame from all combinations of the supplied vectors or factors
+set.seed(123)
+AND <- c(rep(0, 3), 1)
+
+binary.data <-data.frame(expand.grid(c(0, 1), c(0, 1)), AND) 
+```
+
+
+
+
+##3. From a "R Data Librerias"
+###3.1.Import datalibrary
+```{r}
+data("iris")
+
+#Showing 4 first rows from iris dataset
+head(iris,4)
+
+#Showing 5 last rows from iris dataset
+tail(iris,5)
+
+#Assign to a variable
+df5 <- head(iris,10)
+df5
+View(df5)
+
+```
+
+###3.1.Import datalibrary
+```{r}
+install.packages(c("nycflights13", "Lahman"))
+library(nycflights13)
+library(Lahman)
+```
+
+```{r}
+nycflights13::airports
+```
+
+```{r}
+df8=nycflights13::airports
+df8
+```
+
+
+##4. From files inside a file server o PC
+
+```{r}
+#1. import library
+install.packages("readxl")
+library(readxl)
+
+#2.upload the "prueba1.xlsx" file
+df6<- read_excel("C:/R-Source/prueba1.xlsx")
+View(df6)
+```
+
+
+
+
+IIi.LIST
+===============
+*Base on "R for data Science", by Hadley Wickham*
+
+# 1.Create and show Lists
+```{r}
+L1 <- list(c(1, 4), c(8, 4))
+L2 <- list(list(1, 8), list(7, 4))
+L3 <- list(1, list(2, list(5)))
+
+
+```
+
+#2. Subsetting ("utils" packages)
+```{r}
+a <- list(a = 1:3, b = "a string", c = pi, d = list(-1, -5))
+
+str(a[1:2])
+
+```
+#3.Assign values to a Dataframe
+```{r}
+exlist<-as.data.frame(a$a)
+```
+
+Iv.Setting a work space
+=============
+```{r}
+setwd ( "C:/R-Source/bd_dashboard" )
+```
+
